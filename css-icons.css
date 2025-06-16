@@ -1,0 +1,110 @@
+/* CSS 圖示樣式 - 不需要圖片檔案 */
+
+/* AI 大腦圖示 */
+.ai-brain-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(45deg, #00ffff, #0080ff);
+    border-radius: 50%;
+    position: relative;
+    margin: 0 auto 20px;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.ai-brain-icon::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    height: 60%;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+}
+
+.ai-brain-icon::after {
+    content: '🧠';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 32px;
+    filter: grayscale(1) brightness(0) invert(1);
+}
+
+/* 合作圖示 */
+.cooperation-icon {
+    width: 80px;
+    height: 80px;
+    position: relative;
+    margin: 0 auto 20px;
+}
+
+.cooperation-icon::before {
+    content: '🤝';
+    font-size: 48px;
+    filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.5));
+    animation: float 3s ease-in-out infinite;
+}
+
+/* 工具圖示 */
+.tools-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(45deg, #ff00ff, #8000ff);
+    border-radius: 15px;
+    position: relative;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    animation: rotate 4s linear infinite;
+}
+
+.tools-icon::before {
+    content: '⚡';
+    color: white;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* 成功圖示 */
+.success-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(45deg, #00ff88, #00ccff);
+    border-radius: 50%;
+    position: relative;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: checkmark 1s ease-in-out;
+}
+
+.success-icon::before {
+    content: '✓';
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* 動畫效果 */
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes checkmark {
+    0% { transform: scale(0); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
