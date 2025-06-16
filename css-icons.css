@@ -1,110 +1,346 @@
-/* CSS 圖示樣式 - 不需要圖片檔案 */
+/* CSS 圖示樣式 - Chrome專用優化版本 */
 
-/* AI 大腦圖示 */
-.ai-brain-icon {
-    width: 80px;
-    height: 80px;
-    background: linear-gradient(45deg, #00ffff, #0080ff);
-    border-radius: 50%;
-    position: relative;
-    margin: 0 auto 20px;
-    animation: pulse 2s ease-in-out infinite;
+/* 性能優化：為所有動畫元素啟用 GPU 加速 */
+.cooperation-icon,
+.helper-icon,
+.start-icon,
+.summary-icon,
+.cooperation-icon::before,
+.cooperation-icon::after,
+.helper-icon::before,
+.helper-icon::after,
+.start-icon::before,
+.start-icon::after,
+.summary-icon::before,
+.summary-icon::after,
+.icon-container::before {
+    will-change: transform;
+    transform: translate3d(0, 0, 0); /* Chrome專用 3D 轉換 */
+    backface-visibility: hidden; /* 避免背面閃爍 */
 }
 
-.ai-brain-icon::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 60%;
-    height: 60%;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
-    border: 2px solid rgba(255, 255, 255, 0.4);
-}
-
-.ai-brain-icon::after {
-    content: '🧠';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 32px;
-    filter: grayscale(1) brightness(0) invert(1);
-}
-
-/* 合作圖示 */
+/* 第一頁 - AI 合作圖示 (優化版) */
 .cooperation-icon {
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
     position: relative;
-    margin: 0 auto 20px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .cooperation-icon::before {
-    content: '🤝';
-    font-size: 48px;
-    filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.5));
-    animation: float 3s ease-in-out infinite;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #00ffff, #0080ff);
+    border-radius: 50%;
+    animation: pulse-glow-chrome 6s ease-in-out infinite, cooperation-breathe 4s ease-in-out infinite;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.4), inset 0 0 20px rgba(0, 255, 255, 0.2);
 }
 
-/* 工具圖示 */
-.tools-icon {
-    width: 80px;
-    height: 80px;
-    background: linear-gradient(45deg, #ff00ff, #8000ff);
-    border-radius: 15px;
+.cooperation-icon::after {
+    content: '🤝';
+    font-size: 50px;
+    z-index: 2;
+    filter: drop-shadow(0 0 12px rgba(0, 255, 255, 0.6));
+    animation: float-chrome-slow 8s ease-in-out infinite, cooperation-glow 3s ease-in-out infinite;
+}
+
+/* 第二頁 - AI 工具助手圖示 (優化版) */
+.helper-icon {
+    width: 100px;
+    height: 100px;
     position: relative;
-    margin: 0 auto 20px;
+    margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 36px;
-    animation: rotate 4s linear infinite;
 }
 
-.tools-icon::before {
-    content: '⚡';
-    color: white;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+.helper-icon::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #ffaa00, #ff6600);
+    border-radius: 20px;
+    transform: translate3d(0, 0, 0) rotate(45deg);
+    animation: rotate-chrome 12s ease-in-out infinite, helper-breathe 4s ease-in-out infinite;
+    box-shadow: 0 0 20px rgba(255, 170, 0, 0.4), inset 0 0 20px rgba(255, 170, 0, 0.2);
 }
 
-/* 成功圖示 */
-.success-icon {
-    width: 80px;
-    height: 80px;
+.helper-icon::after {
+    content: '🛠️';
+    font-size: 45px;
+    z-index: 2;
+    filter: drop-shadow(0 0 10px rgba(255, 170, 0, 0.6));
+    animation: bounce-chrome 6s ease-in-out infinite, helper-glow 3s ease-in-out infinite;
+}
+
+/* 第三頁 - 開始行動圖示 (優化版) */
+.start-icon {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.start-icon::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #ff0080, #8000ff);
+    clip-path: polygon(0% 50%, 100% 0%, 100% 100%);
+    animation: arrow-glow-chrome 8s ease-in-out infinite, start-breathe 4s ease-in-out infinite;
+    box-shadow: 0 0 20px rgba(255, 0, 128, 0.4);
+}
+
+.start-icon::after {
+    content: '▶️';
+    font-size: 45px;
+    z-index: 2;
+    filter: drop-shadow(0 0 10px rgba(255, 0, 128, 0.6));
+    animation: scale-chrome 6s ease-in-out infinite, start-glow 3s ease-in-out infinite;
+}
+
+/* 第四頁 - 成功/總結圖示 (優化版) */
+.summary-icon {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.summary-icon::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
     background: linear-gradient(45deg, #00ff88, #00ccff);
     border-radius: 50%;
+    animation: success-chrome 5s ease-in-out infinite, summary-breathe 4s ease-in-out infinite;
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.4), inset 0 0 20px rgba(0, 255, 136, 0.2);
+}
+
+.summary-icon::after {
+    content: '🎯';
+    font-size: 50px;
+    z-index: 2;
+    filter: drop-shadow(0 0 12px rgba(0, 255, 136, 0.6));
+    animation: target-spin-chrome 20s linear infinite, summary-glow 3s ease-in-out infinite;
+}
+
+/* Chrome優化後的動畫效果 - 減少頻率，降低複雜度 */
+@keyframes pulse-glow-chrome {
+    0%, 100% { 
+        transform: translate3d(0, 0, 0) scale(1);
+        opacity: 0.7;
+    }
+    50% { 
+        transform: translate3d(0, 0, 0) scale(1.03);
+        opacity: 0.9;
+    }
+}
+
+@keyframes float-chrome-slow {
+    0%, 100% { transform: translate3d(0, 0, 0); }
+    50% { transform: translate3d(0, -5px, 0); }
+}
+
+@keyframes rotate-chrome {
+    0%, 100% { 
+        transform: translate3d(0, 0, 0) rotate(45deg) scale(1);
+        opacity: 0.8;
+    }
+    50% { 
+        transform: translate3d(0, 0, 0) rotate(45deg) scale(1.02);
+        opacity: 1;
+    }
+}
+
+@keyframes bounce-chrome {
+    0%, 100% { transform: translate3d(0, 0, 0); }
+    33% { transform: translate3d(0, -2px, 0); }
+    66% { transform: translate3d(0, -1px, 0); }
+}
+
+@keyframes arrow-glow-chrome {
+    0%, 100% { 
+        opacity: 0.7;
+    }
+    50% { 
+        opacity: 0.9;
+    }
+}
+
+@keyframes scale-chrome {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+    50% { transform: translate3d(0, 0, 0) scale(1.03); }
+}
+
+@keyframes success-chrome {
+    0%, 100% { 
+        transform: translate3d(0, 0, 0) scale(1);
+        opacity: 0.8;
+    }
+    50% { 
+        transform: translate3d(0, 0, 0) scale(1.02);
+        opacity: 1;
+    }
+}
+
+@keyframes target-spin-chrome {
+    0% { transform: translate3d(0, 0, 0) rotate(0deg); }
+    100% { transform: translate3d(0, 0, 0) rotate(360deg); }
+}
+
+/* 圖示呼吸和閃爍動畫 - Chrome優化版 */
+@keyframes cooperation-breathe {
+    0%, 100% { 
+        transform: translate3d(0, 0, 0) scale(1);
+        box-shadow: 0 0 15px rgba(0, 255, 255, 0.3), inset 0 0 15px rgba(0, 255, 255, 0.1);
+    }
+    50% { 
+        transform: translate3d(0, 0, 0) scale(1.05);
+        box-shadow: 0 0 25px rgba(0, 255, 255, 0.6), inset 0 0 25px rgba(0, 255, 255, 0.3);
+    }
+}
+
+@keyframes cooperation-glow {
+    0%, 100% { 
+        filter: drop-shadow(0 0 8px rgba(0, 255, 255, 0.4));
+    }
+    50% { 
+        filter: drop-shadow(0 0 16px rgba(0, 255, 255, 0.8)) drop-shadow(0 0 24px rgba(0, 255, 255, 0.4));
+    }
+}
+
+@keyframes helper-breathe {
+    0%, 100% { 
+        transform: translate3d(0, 0, 0) rotate(45deg) scale(1);
+        box-shadow: 0 0 15px rgba(255, 170, 0, 0.3), inset 0 0 15px rgba(255, 170, 0, 0.1);
+    }
+    50% { 
+        transform: translate3d(0, 0, 0) rotate(45deg) scale(1.05);
+        box-shadow: 0 0 25px rgba(255, 170, 0, 0.6), inset 0 0 25px rgba(255, 170, 0, 0.3);
+    }
+}
+
+@keyframes helper-glow {
+    0%, 100% { 
+        filter: drop-shadow(0 0 6px rgba(255, 170, 0, 0.4));
+    }
+    50% { 
+        filter: drop-shadow(0 0 14px rgba(255, 170, 0, 0.8)) drop-shadow(0 0 22px rgba(255, 170, 0, 0.4));
+    }
+}
+
+@keyframes start-breathe {
+    0%, 100% { 
+        transform: translate3d(0, 0, 0) scale(1);
+        box-shadow: 0 0 15px rgba(255, 0, 128, 0.3);
+    }
+    50% { 
+        transform: translate3d(0, 0, 0) scale(1.05);
+        box-shadow: 0 0 25px rgba(255, 0, 128, 0.6);
+    }
+}
+
+@keyframes start-glow {
+    0%, 100% { 
+        filter: drop-shadow(0 0 6px rgba(255, 0, 128, 0.4));
+    }
+    50% { 
+        filter: drop-shadow(0 0 14px rgba(255, 0, 128, 0.8)) drop-shadow(0 0 22px rgba(255, 0, 128, 0.4));
+    }
+}
+
+@keyframes summary-breathe {
+    0%, 100% { 
+        transform: translate3d(0, 0, 0) scale(1);
+        box-shadow: 0 0 15px rgba(0, 255, 136, 0.3), inset 0 0 15px rgba(0, 255, 136, 0.1);
+    }
+    50% { 
+        transform: translate3d(0, 0, 0) scale(1.05);
+        box-shadow: 0 0 25px rgba(0, 255, 136, 0.6), inset 0 0 25px rgba(0, 255, 136, 0.3);
+    }
+}
+
+@keyframes summary-glow {
+    0%, 100% { 
+        filter: drop-shadow(0 0 8px rgba(0, 255, 136, 0.4));
+    }
+    50% { 
+        filter: drop-shadow(0 0 16px rgba(0, 255, 136, 0.8)) drop-shadow(0 0 24px rgba(0, 255, 136, 0.4));
+    }
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+    .cooperation-icon,
+    .helper-icon,
+    .start-icon,
+    .summary-icon {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .cooperation-icon::after,
+    .summary-icon::after {
+        font-size: 40px;
+    }
+    
+    .helper-icon::after,
+    .start-icon::after {
+        font-size: 35px;
+    }
+}
+
+/* 簡化的裝飾元素 - 減少動畫複雜度 */
+.icon-container {
     position: relative;
-    margin: 0 auto 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    animation: checkmark 1s ease-in-out;
+    padding: 20px;
 }
 
-.success-icon::before {
-    content: '✓';
-    color: white;
-    font-size: 40px;
-    font-weight: bold;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+.icon-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%) translate3d(0, 0, 0);
+    width: 140px;
+    height: 140px;
+    border: 1px solid rgba(0, 255, 255, 0.12);
+    border-radius: 50%;
+    animation: border-rotate-chrome 24s linear infinite;
 }
 
-/* 動畫效果 */
-@keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
+@keyframes border-rotate-chrome {
+    0% { transform: translateX(-50%) translate3d(0, 0, 0) rotate(0deg); }
+    100% { transform: translateX(-50%) translate3d(0, 0, 0) rotate(360deg); }
 }
 
-@keyframes rotate {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-@keyframes checkmark {
-    0% { transform: scale(0); }
-    50% { transform: scale(1.2); }
-    100% { transform: scale(1); }
+/* 性能優化：減少重繪 */
+@media (prefers-reduced-motion: reduce) {
+    .cooperation-icon::before,
+    .cooperation-icon::after,
+    .helper-icon::before,
+    .helper-icon::after,
+    .start-icon::before,
+    .start-icon::after,
+    .summary-icon::before,
+    .summary-icon::after,
+    .icon-container::before {
+        animation: none;
+    }
 }

@@ -12,7 +12,7 @@ body {
     position: relative;
 }
 
-/* 科幻背景動畫 */
+/* 科幻背景動畫 - Chrome專用優化版 */
 body::before {
     content: '';
     position: fixed;
@@ -21,14 +21,17 @@ body::before {
     width: 100%;
     height: 100%;
     background-image: 
-        linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
-    background-size: 50px 50px;
-    animation: grid-move 20s linear infinite;
+        linear-gradient(rgba(0, 255, 255, 0.01) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 255, 0.01) 1px, transparent 1px);
+    background-size: 120px 120px;
+    animation: grid-move-chrome 60s linear infinite;
     pointer-events: none;
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
 }
 
-/* 粒子效果 */
+/* Chrome友好的星空粒子效果 */
 body::after {
     content: '';
     position: fixed;
@@ -37,25 +40,53 @@ body::after {
     width: 100%;
     height: 100%;
     background-image: 
-        radial-gradient(2px 2px at 20px 30px, rgba(0, 255, 255, 0.3), transparent),
-        radial-gradient(2px 2px at 40px 70px, rgba(255, 0, 255, 0.3), transparent),
-        radial-gradient(1px 1px at 90px 40px, rgba(0, 255, 255, 0.5), transparent),
-        radial-gradient(1px 1px at 130px 80px, rgba(255, 0, 255, 0.4), transparent),
-        radial-gradient(2px 2px at 160px 30px, rgba(0, 255, 255, 0.3), transparent);
-    background-repeat: repeat;
-    background-size: 200px 200px;
-    animation: stars 8s linear infinite;
+        radial-gradient(circle at 20% 20%, rgba(0, 255, 255, 0.8) 1px, transparent 1px),
+        radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.6) 1px, transparent 1px),
+        radial-gradient(circle at 60% 30%, rgba(0, 255, 255, 0.7) 1px, transparent 1px),
+        radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.5) 1px, transparent 1px),
+        radial-gradient(circle at 10% 60%, rgba(0, 255, 255, 0.6) 1px, transparent 1px),
+        radial-gradient(circle at 90% 40%, rgba(255, 255, 255, 0.7) 1px, transparent 1px),
+        radial-gradient(circle at 30% 90%, rgba(0, 255, 255, 0.5) 1px, transparent 1px),
+        radial-gradient(circle at 70% 10%, rgba(255, 255, 255, 0.8) 1px, transparent 1px);
+    background-size: 
+        300px 300px,
+        250px 250px,
+        400px 400px,
+        350px 350px,
+        280px 280px,
+        320px 320px,
+        380px 380px,
+        270px 270px;
+    animation: twinkle-stars 12s ease-in-out infinite;
     pointer-events: none;
+    z-index: 1;
+    will-change: opacity;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
 }
 
-@keyframes grid-move {
-    0% { transform: translate(0, 0); }
-    100% { transform: translate(50px, 50px); }
+@keyframes grid-move-chrome {
+    0% { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(120px, 120px, 0); }
 }
 
-@keyframes stars {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-200px); }
+@keyframes twinkle-stars {
+    0%, 100% { 
+        opacity: 0.8;
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+    25% { 
+        opacity: 0.4;
+        transform: translate3d(0, 0, 0) scale(0.8);
+    }
+    50% { 
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1.1);
+    }
+    75% { 
+        opacity: 0.6;
+        transform: translate3d(0, 0, 0) scale(0.9);
+    }
 }
 
 .page-indicator {
@@ -73,19 +104,22 @@ body::after {
     background-color: rgba(0, 255, 255, 0.3);
     border-radius: 50%;
     cursor: pointer;
-    transition: all 0.3s ease;
-    border: 1px solid rgba(0, 255, 255, 0.5);
-    box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(0, 255, 255, 0.4);
+    box-shadow: 0 0 5px rgba(0, 255, 255, 0.2);
+    will-change: auto;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
 }
 
 .dot.active {
-    background-color: rgba(0, 255, 255, 0.8);
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+    background-color: rgba(0, 255, 255, 0.7);
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
 }
 
 .dot:hover {
-    background-color: rgba(0, 255, 255, 0.6);
-    box-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+    background-color: rgba(0, 255, 255, 0.5);
+    box-shadow: 0 0 8px rgba(0, 255, 255, 0.4);
 }
 
 .slide {
@@ -99,21 +133,22 @@ body::after {
     justify-content: center;
     align-items: center;
     opacity: 0;
-    transform: translateX(100px);
-    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform: translate3d(100px, 0, 0);
+    transition: opacity 0.6s ease, transform 0.6s ease;
     padding: 40px;
     color: #ffffff;
     background: rgba(15, 15, 35, 0.8);
-    backdrop-filter: blur(10px);
+    will-change: auto;
+    backface-visibility: hidden;
 }
 
 .slide.active {
     opacity: 1;
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
 }
 
 .slide.prev {
-    transform: translateX(-100px);
+    transform: translate3d(-100px, 0, 0);
 }
 
 .container {
@@ -128,14 +163,18 @@ body::after {
 
 .slide-header .icon {
     font-size: 4em;
-    margin-bottom: 30px;
-    filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.5));
-    animation: float 3s ease-in-out infinite;
+    margin-bottom: 40px;
+    position: relative;
+    filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.6));
+    animation: float-chrome 4s ease-in-out infinite, icon-breathe 3s ease-in-out infinite, icon-glow-pulse 2.5s ease-in-out infinite;
+    will-change: transform, filter;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
 }
 
-@keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
+@keyframes float-chrome {
+    0%, 100% { transform: translate3d(0, 0, 0); }
+    50% { transform: translate3d(0, -8px, 0); }
 }
 
 .slide-header h1 {
@@ -145,13 +184,15 @@ body::after {
     text-transform: uppercase;
     letter-spacing: 3px;
     background: linear-gradient(45deg, #00ffff, #0080ff, #ff00ff);
-    background-size: 300% 300%;
+    background-size: 200% 200%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: gradient-shift 3s ease infinite;
-    text-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+    animation: gradient-shift-chrome 4s ease infinite, title-glow 3s ease-in-out infinite;
+    text-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
     position: relative;
+    will-change: background-position, text-shadow;
+    transform: translate3d(0, 0, 0);
 }
 
 .slide-header h1::before {
@@ -162,51 +203,98 @@ body::after {
     right: -5px;
     bottom: -5px;
     background: linear-gradient(45deg, #00ffff, #0080ff, #ff00ff);
-    background-size: 300% 300%;
-    animation: gradient-shift 3s ease infinite;
+    background-size: 200% 200%;
+    animation: gradient-shift-chrome 4s ease infinite, glow-pulse 2s ease-in-out infinite;
     z-index: -1;
-    filter: blur(15px);
-    opacity: 0.3;
+    filter: blur(12px);
+    opacity: 0.4;
+    will-change: background-position, opacity;
+    transform: translate3d(0, 0, 0);
 }
 
-@keyframes gradient-shift {
+@keyframes gradient-shift-chrome {
     0%, 100% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
 }
 
+@keyframes title-glow {
+    0%, 100% { 
+        text-shadow: 
+            0 0 20px rgba(0, 255, 255, 0.4),
+            0 0 40px rgba(0, 255, 255, 0.2),
+            0 0 60px rgba(0, 255, 255, 0.1);
+    }
+    50% { 
+        text-shadow: 
+            0 0 30px rgba(0, 255, 255, 0.8),
+            0 0 60px rgba(0, 255, 255, 0.4),
+            0 0 90px rgba(0, 255, 255, 0.2);
+    }
+}
+
+@keyframes glow-pulse {
+    0%, 100% { 
+        opacity: 0.3;
+        filter: blur(12px);
+    }
+    50% { 
+        opacity: 0.6;
+        filter: blur(18px);
+    }
+}
+
 .quote-section {
-    margin-bottom: 40px;
+    margin-bottom: 50px;
 }
 
 .quote-section blockquote {
     font-size: 1.4em;
     font-style: italic;
     color: #e0e0e0;
-    background: rgba(0, 255, 255, 0.1);
+    background: rgba(0, 255, 255, 0.08);
     padding: 30px;
     border-radius: 15px;
-    border: 2px solid rgba(0, 255, 255, 0.3);
-    backdrop-filter: blur(15px);
+    border: 2px solid rgba(0, 255, 255, 0.25);
     box-shadow: 
         0 8px 32px rgba(0, 0, 0, 0.3),
-        inset 0 0 20px rgba(0, 255, 255, 0.1);
+        inset 0 0 20px rgba(0, 255, 255, 0.05);
     position: relative;
+    overflow: hidden;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
 }
 
 .quote-section blockquote::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, 
+        rgba(0, 255, 255, 0.25), 
+        rgba(255, 0, 255, 0.25), 
+        rgba(0, 255, 255, 0.25)
+    );
+    background-size: 200% 200%;
+    animation: border-flow-chrome 6s ease-in-out infinite, border-pulse 4s ease-in-out infinite;
     border-radius: 15px;
-    padding: 2px;
-    background: linear-gradient(45deg, #00ffff, transparent, #ff00ff);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: exclude;
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask-composite: exclude;
+    z-index: -1;
+    will-change: background-position, opacity;
+}
+
+@keyframes border-flow-chrome {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+@keyframes border-pulse {
+    0%, 100% { 
+        opacity: 0.8;
+    }
+    50% { 
+        opacity: 1;
+    }
 }
 
 .content-section h3 {
@@ -227,16 +315,18 @@ body::after {
 }
 
 .quote-item {
-    background: rgba(0, 255, 255, 0.05);
+    background: rgba(0, 255, 255, 0.04);
     padding: 25px;
     border-radius: 12px;
     font-size: 1.1em;
     line-height: 1.6;
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(0, 255, 255, 0.2);
-    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 255, 255, 0.15);
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     position: relative;
     overflow: hidden;
+    margin-bottom: 25px;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
 }
 
 .quote-item::before {
@@ -246,8 +336,9 @@ body::after {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.1), transparent);
-    transition: left 0.5s ease;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.08), transparent);
+    transition: left 0.6s ease;
+    will-change: transform;
 }
 
 .quote-item:hover::before {
@@ -255,21 +346,37 @@ body::after {
 }
 
 .quote-item:hover {
-    background: rgba(0, 255, 255, 0.1);
-    transform: translateY(-3px);
-    box-shadow: 0 15px 35px rgba(0, 255, 255, 0.2);
-    border-color: rgba(0, 255, 255, 0.4);
+    background: rgba(0, 255, 255, 0.08);
+    transform: translate3d(0, -2px, 0);
+    box-shadow: 0 12px 30px rgba(0, 255, 255, 0.15);
+    border-color: rgba(0, 255, 255, 0.3);
+}
+
+.quote-item:nth-child(1) {
+    border-left: 3px solid #00ffff;
+    padding-left: 20px;
+}
+
+.quote-item:nth-child(2) {
+    border-left: 3px solid #ff00ff;
+    padding-left: 20px;
+}
+
+.quote-item:nth-child(3) {
+    border-left: 3px solid #00ff88;
+    padding-left: 20px;
 }
 
 .emphasis {
-    background: rgba(255, 0, 255, 0.1);
+    background: rgba(255, 0, 255, 0.08);
     padding: 25px;
     border-radius: 12px;
     font-size: 1.2em;
     line-height: 1.6;
-    border: 2px solid rgba(255, 0, 255, 0.3);
-    backdrop-filter: blur(15px);
-    box-shadow: 0 0 30px rgba(255, 0, 255, 0.2);
+    border: 2px solid rgba(255, 0, 255, 0.25);
+    box-shadow: 0 0 25px rgba(255, 0, 255, 0.15);
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
 }
 
 .emphasis strong {
@@ -287,27 +394,31 @@ body::after {
 
 .summary-item {
     opacity: 0;
-    animation: fadeInUp 0.8s ease forwards;
+    animation: fadeInUp-chrome 1s ease forwards;
+    will-change: auto;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
 }
 
-.summary-item:nth-child(1) { animation-delay: 0.2s; }
-.summary-item:nth-child(2) { animation-delay: 0.5s; }
-.summary-item:nth-child(3) { animation-delay: 0.8s; }
+.summary-item:nth-child(1) { animation-delay: 0.3s; }
+.summary-item:nth-child(2) { animation-delay: 0.6s; }
+.summary-item:nth-child(3) { animation-delay: 0.9s; }
 
 .summary-quote {
-    background: linear-gradient(135deg, rgba(0, 255, 255, 0.2), rgba(255, 0, 255, 0.1));
+    background: linear-gradient(135deg, rgba(0, 255, 255, 0.15), rgba(255, 0, 255, 0.08));
     padding: 35px;
     border-radius: 20px;
     font-size: 1.6em;
     font-weight: 700;
     color: #ffffff;
-    border: 2px solid rgba(0, 255, 255, 0.4);
-    backdrop-filter: blur(20px);
+    border: 2px solid rgba(0, 255, 255, 0.3);
     box-shadow: 
         0 15px 40px rgba(0, 0, 0, 0.3),
-        0 0 30px rgba(0, 255, 255, 0.2);
+        0 0 25px rgba(0, 255, 255, 0.15);
     position: relative;
-    text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+    text-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
 }
 
 .summary-quote::before {
@@ -319,12 +430,13 @@ body::after {
     bottom: -2px;
     background: linear-gradient(45deg, #00ffff, #ff00ff, #00ffff);
     background-size: 200% 200%;
-    animation: border-glow 2s ease infinite;
+    animation: border-glow-chrome 3s ease infinite;
     border-radius: 20px;
     z-index: -1;
+    will-change: background-position;
 }
 
-@keyframes border-glow {
+@keyframes border-glow-chrome {
     0%, 100% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
 }
@@ -332,30 +444,37 @@ body::after {
 .final-message {
     margin-top: 40px;
     opacity: 0;
-    animation: fadeInUp 0.8s ease forwards 1.2s;
+    animation: fadeInUp-chrome 1s ease forwards 1.5s;
+    will-change: auto;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
 }
 
 .final-message h2 {
     font-size: 2.2em;
     margin-bottom: 15px;
     color: #00ffff;
-    text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+    text-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
     font-weight: 700;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
 }
 
 .final-message p {
     font-size: 1.2em;
     color: #e0e0e0;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
 }
 
-@keyframes fadeInUp {
+@keyframes fadeInUp-chrome {
     from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translate3d(0, 20px, 0);
     }
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translate3d(0, 0, 0);
     }
 }
 
@@ -451,3 +570,83 @@ body::after {
         max-height: 200px;
     }
 }
+
+/* 為每一頁添加獨特的背景效果 */
+#slide1 {
+    background: radial-gradient(ellipse at top left, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom right, rgba(0, 128, 255, 0.1) 0%, transparent 50%),
+                rgba(15, 15, 35, 0.9);
+}
+
+#slide2 {
+    background: radial-gradient(ellipse at top right, rgba(255, 170, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom left, rgba(255, 102, 0, 0.1) 0%, transparent 50%),
+                rgba(15, 15, 35, 0.9);
+}
+
+#slide3 {
+    background: radial-gradient(ellipse at center, rgba(255, 0, 128, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at top, rgba(128, 0, 255, 0.1) 0%, transparent 50%),
+                rgba(15, 15, 35, 0.9);
+}
+
+#slide4 {
+    background: radial-gradient(ellipse at bottom, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at top, rgba(0, 204, 255, 0.1) 0%, transparent 50%),
+                rgba(15, 15, 35, 0.9);
+}
+
+/* 加入微妙的背景紋理 - Chrome優化版 */
+.container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 25% 25%, rgba(0, 255, 255, 0.01) 1px, transparent 1px),
+        radial-gradient(circle at 75% 75%, rgba(255, 0, 255, 0.01) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: -1;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+}
+
+/* Chrome瀏覽器專用優化 */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    /* Chrome專用樣式 */
+    body {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+      /* 強制硬體加速所有動畫元素 */
+    *[class*="icon"],
+    .slide,
+    .quote-section blockquote,
+    .quote-item,
+    .summary-quote {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        -webkit-perspective: 1000px;
+        perspective: 1000px;
+    }
+    
+    /* 降低背景動畫強度 */
+    body::before {
+        opacity: 0.8;
+        animation-duration: 80s;
+    }
+    
+    /* 簡化複雜動畫 */
+    .slide-header h1::before {
+        animation-duration: 6s;
+        filter: blur(6px);
+        opacity: 0.15;
+    }
+}
+
+/* 針對動畫偏好設定的優化 */
