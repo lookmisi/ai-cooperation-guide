@@ -1,0 +1,453 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans TC', 'Orbitron', 'Rajdhani', sans-serif;
+    background: radial-gradient(ellipse at center, #0f0f23 0%, #000000 70%);
+    overflow: hidden;
+    height: 100vh;
+    position: relative;
+}
+
+/* 科幻背景動畫 */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: grid-move 20s linear infinite;
+    pointer-events: none;
+}
+
+/* 粒子效果 */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, rgba(0, 255, 255, 0.3), transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(255, 0, 255, 0.3), transparent),
+        radial-gradient(1px 1px at 90px 40px, rgba(0, 255, 255, 0.5), transparent),
+        radial-gradient(1px 1px at 130px 80px, rgba(255, 0, 255, 0.4), transparent),
+        radial-gradient(2px 2px at 160px 30px, rgba(0, 255, 255, 0.3), transparent);
+    background-repeat: repeat;
+    background-size: 200px 200px;
+    animation: stars 8s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes grid-move {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(50px, 50px); }
+}
+
+@keyframes stars {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-200px); }
+}
+
+.page-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    gap: 10px;
+}
+
+.dot {
+    height: 12px;
+    width: 12px;
+    background-color: rgba(0, 255, 255, 0.3);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 255, 255, 0.5);
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+}
+
+.dot.active {
+    background-color: rgba(0, 255, 255, 0.8);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+}
+
+.dot:hover {
+    background-color: rgba(0, 255, 255, 0.6);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+}
+
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transform: translateX(100px);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    padding: 40px;
+    color: #ffffff;
+    background: rgba(15, 15, 35, 0.8);
+    backdrop-filter: blur(10px);
+}
+
+.slide.active {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.slide.prev {
+    transform: translateX(-100px);
+}
+
+.container {
+    max-width: 1000px;
+    width: 100%;
+    text-align: center;
+}
+
+.slide-header {
+    margin-bottom: 40px;
+}
+
+.slide-header .icon {
+    font-size: 4em;
+    margin-bottom: 30px;
+    filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.5));
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+.slide-header h1 {
+    font-size: 4em;
+    font-weight: 900;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    background: linear-gradient(45deg, #00ffff, #0080ff, #ff00ff);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradient-shift 3s ease infinite;
+    text-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+    position: relative;
+}
+
+.slide-header h1::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    background: linear-gradient(45deg, #00ffff, #0080ff, #ff00ff);
+    background-size: 300% 300%;
+    animation: gradient-shift 3s ease infinite;
+    z-index: -1;
+    filter: blur(15px);
+    opacity: 0.3;
+}
+
+@keyframes gradient-shift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.quote-section {
+    margin-bottom: 40px;
+}
+
+.quote-section blockquote {
+    font-size: 1.4em;
+    font-style: italic;
+    color: #e0e0e0;
+    background: rgba(0, 255, 255, 0.1);
+    padding: 30px;
+    border-radius: 15px;
+    border: 2px solid rgba(0, 255, 255, 0.3);
+    backdrop-filter: blur(15px);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        inset 0 0 20px rgba(0, 255, 255, 0.1);
+    position: relative;
+}
+
+.quote-section blockquote::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 15px;
+    padding: 2px;
+    background: linear-gradient(45deg, #00ffff, transparent, #ff00ff);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: exclude;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+}
+
+.content-section h3 {
+    font-size: 1.1em;
+    margin-bottom: 25px;
+    color: #888;
+    font-weight: 300;
+    opacity: 0.7;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.quote-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.quote-item {
+    background: rgba(0, 255, 255, 0.05);
+    padding: 25px;
+    border-radius: 12px;
+    font-size: 1.1em;
+    line-height: 1.6;
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.quote-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.quote-item:hover::before {
+    left: 100%;
+}
+
+.quote-item:hover {
+    background: rgba(0, 255, 255, 0.1);
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(0, 255, 255, 0.2);
+    border-color: rgba(0, 255, 255, 0.4);
+}
+
+.emphasis {
+    background: rgba(255, 0, 255, 0.1);
+    padding: 25px;
+    border-radius: 12px;
+    font-size: 1.2em;
+    line-height: 1.6;
+    border: 2px solid rgba(255, 0, 255, 0.3);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 0 30px rgba(255, 0, 255, 0.2);
+}
+
+.emphasis strong {
+    color: #ff00ff;
+    text-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+}
+
+/* 第四頁特殊樣式 */
+.summary-section {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.summary-item {
+    opacity: 0;
+    animation: fadeInUp 0.8s ease forwards;
+}
+
+.summary-item:nth-child(1) { animation-delay: 0.2s; }
+.summary-item:nth-child(2) { animation-delay: 0.5s; }
+.summary-item:nth-child(3) { animation-delay: 0.8s; }
+
+.summary-quote {
+    background: linear-gradient(135deg, rgba(0, 255, 255, 0.2), rgba(255, 0, 255, 0.1));
+    padding: 35px;
+    border-radius: 20px;
+    font-size: 1.6em;
+    font-weight: 700;
+    color: #ffffff;
+    border: 2px solid rgba(0, 255, 255, 0.4);
+    backdrop-filter: blur(20px);
+    box-shadow: 
+        0 15px 40px rgba(0, 0, 0, 0.3),
+        0 0 30px rgba(0, 255, 255, 0.2);
+    position: relative;
+    text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+}
+
+.summary-quote::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #00ffff, #ff00ff, #00ffff);
+    background-size: 200% 200%;
+    animation: border-glow 2s ease infinite;
+    border-radius: 20px;
+    z-index: -1;
+}
+
+@keyframes border-glow {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.final-message {
+    margin-top: 40px;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease forwards 1.2s;
+}
+
+.final-message h2 {
+    font-size: 2.2em;
+    margin-bottom: 15px;
+    color: #00ffff;
+    text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+    font-weight: 700;
+}
+
+.final-message p {
+    font-size: 1.2em;
+    color: #e0e0e0;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+    .slide {
+        padding: 20px;
+    }
+      .slide-header h1 {
+        font-size: 2.8em;
+        font-weight: 900;
+        letter-spacing: 2px;
+    }
+    
+    .quote-section blockquote {
+        font-size: 1.2em;
+        padding: 20px;
+    }
+    
+    .quote-item {
+        font-size: 1em;
+        padding: 15px;
+    }
+    
+    .emphasis {
+        font-size: 1.1em;
+        padding: 20px;
+    }
+    
+    .summary-quote {
+        font-size: 1.3em;        padding: 25px;
+    }
+}
+
+@media (max-width: 480px) {    .slide-header h1 {
+        font-size: 2.2em;
+        font-weight: 900;
+        letter-spacing: 1px;
+    }
+    
+    .quote-section blockquote {
+        font-size: 1.1em;
+        padding: 15px;
+    }
+    
+    .quote-item {
+        font-size: 0.95em;
+    }
+    
+    .summary-quote {
+        font-size: 1.2em;
+        padding: 20px;
+    }
+}
+
+/* 圖片樣式 */
+.slide-icon {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.5));
+    animation: float 3s ease-in-out infinite;
+}
+
+.content-image {
+    max-width: 100%;
+    height: auto;
+    max-height: 300px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(0, 255, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+.content-image:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 40px rgba(0, 255, 255, 0.2);
+}
+
+.image-section {
+    margin: 30px 0;
+    text-align: center;
+}
+
+/* 響應式圖片 */
+@media (max-width: 768px) {
+    .slide-icon {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .content-image {
+        max-height: 200px;
+    }
+}

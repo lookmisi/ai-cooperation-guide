@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 合作指南 - 網頁簡報</title>    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 頁面指示器 -->
+    <div class="page-indicator">
+        <span class="dot active" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
+        <span class="dot" onclick="currentSlide(3)"></span>
+        <span class="dot" onclick="currentSlide(4)"></span>
+    </div>
+
+    <!-- 第一頁：AI 不是魔法，是一種合作 -->
+    <div class="slide active" id="slide1">
+        <div class="container">            <div class="slide-header">
+                <!-- 可以用圖片替換表情符號 -->
+                <div class="icon">
+                    <!-- <img src="images/ai-cooperation.png" alt="AI合作" class="slide-icon"> -->
+                    🟢
+                </div>
+                <h1>一、AI 不是魔法，是一種合作</h1>
+            </div>
+            
+            <!-- 可以在這裡加入相關圖片 -->
+            <!-- <div class="image-section">
+                <img src="images/ai-teamwork.jpg" alt="AI團隊合作" class="content-image">
+            </div> -->
+            
+            <div class="quote-section">
+                <blockquote>
+                    它不是萬能的答案機，而是需要你教、需要你磨合的夥伴。
+                </blockquote>
+            </div>            <div class="content-section">
+                <div class="quote-list">
+                    <div class="quote-item">
+                        「一開始我也以為它什麼都會，結果叫它做簡報，它只丟出一堆無聊的大綱。」
+                    </div>
+                    <div class="quote-item">
+                        「後來我才知道，它不會自動懂我在想什麼，它需要我去引導，就像在帶一個剛來的新人。」
+                    </div>
+                    <div class="quote-item">
+                        「當我開始試著講清楚需求、舉例給它，它做得比我想像中好。」
+                    </div>
+                </div>
+            </div>        </div>
+    </div>
+
+    <!-- 第二頁：我用過 AI，我發現它不是完美，但它幫了我很多 -->
+    <div class="slide" id="slide2">
+        <div class="container">
+            <div class="slide-header">
+                <div class="icon">🟡</div>
+                <h1>二、它不完美，但它幫了我很多</h1>
+            </div>
+            
+            <div class="quote-section">
+                <blockquote>
+                    它沒辦法幫我做完所有事，但能幫我跨過最卡的那一段：最難開始、最難修改的地方。
+                </blockquote>
+            </div>            <div class="content-section">
+                <div class="quote-list">
+                    <div class="quote-item">
+                        「它幫我把雜亂語音轉成客服紀錄，雖然需要調整，但比我自己打快非常多。」
+                    </div>
+                    <div class="quote-item">
+                        「它幫我潤稿、補洞、想開場白……不是全部都對，但每次都為我省下一大半時間。」
+                    </div>
+                    <div class="quote-item">
+                        「很多時候不是因為它完美才用它，而是要它給我一個方向、一個起點。」
+                    </div>
+                </div>
+            </div>        </div>
+        
+    </div>
+
+    <!-- 第三頁：不需要會用，只需要開始試一下 -->
+    <div class="slide" id="slide3">
+        <div class="container">
+            <div class="slide-header">
+                <div class="icon">🔴</div>
+                <h1>三、不需要會用，只需要開始</h1>
+            </div>
+            
+            <div class="quote-section">
+                <blockquote>
+                    你不用特別學會什麼，你只要打一句你平常會說的話，它就會回應你。
+                </blockquote>
+            </div>            <div class="content-section">
+                <div class="quote-list">
+                    <div class="quote-item">
+                        「我第一次用 AI，就是問它：『你可以幫我把這句話寫得禮貌一點嗎？』」
+                    </div>
+                    <div class="quote-item">
+                        「不用從大任務開始，只要一句話、一件小事，像是『幫我整理這份筆記』就可以了。」
+                    </div>
+                    <div class="quote-item">
+                        「其實用 AI ，更像是慢慢養成一種新習慣，就像我們學會 office、LINE 一樣。」
+                    </div>
+                </div>
+            </div>        </div>
+        
+    </div>
+
+    <!-- 第四頁：總結 -->
+    <div class="slide" id="slide4">
+        <div class="container">
+            <div class="slide-header">
+                <div class="icon">🪧</div>
+                <h1>總結</h1>
+            </div>
+            
+            <div class="summary-section">
+                <div class="summary-item">
+                    <div class="summary-quote">
+                        「AI 是一種合作，不是魔法。」
+                    </div>
+                </div>
+                
+                <div class="summary-item">
+                    <div class="summary-quote">
+                        「它不完美，但幫得上忙。」
+                    </div>
+                </div>
+                
+                <div class="summary-item">
+                    <div class="summary-quote">
+                        「只要試試看，慢慢地你就會發現效率正在提升。」
+                    </div>
+                </div>
+            </div>
+
+            <div class="final-message">
+                <h2>開始你的 AI 合作之旅</h2>
+                <p>從今天開始，試著用 AI 處理一件小事吧！</p>
+            </div>        </div>
+        
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
